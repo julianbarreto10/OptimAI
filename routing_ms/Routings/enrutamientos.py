@@ -10,10 +10,12 @@ from ortools.constraint_solver import pywrapcp
 from ortools.constraint_solver import routing_enums_pb2
 from datetime import datetime
 import json
+import requests
 import warnings
 warnings.filterwarnings('ignore')
 import traceback
 
+from config import URL_DB_INSERT
 
 logging.basicConfig(filename='logysto_router.log', filemode='a', format='%(asctime)s %(levelname)s => %(message)s')
 logging.root.setLevel(logging.INFO)
@@ -263,8 +265,25 @@ def router_unif(rqst,token,tp,tokenrequest,router_type):
                 # Convertir a JSON
                 documento_json_str = documento_json
 
-                      
-                logging.info("Termina Enrutamiento - "+str(token))
+                # URL de la API
+                url = URL_DB_INSERT
+
+                
+
+                # Encabezados (opcional, pero recomendado para APIs que esperan JSON)
+                headers = {
+                    "Content-Type": "application/json"
+                }
+
+                # Hacer la solicitud POST
+                response = requests.post(url, headers=headers, data=json.dumps(documento_json_str))
+
+                # Verificar el resultado de la solicitud
+                if response.status_code == 200:
+                    logging.info("Termina Enrutamiento - "+str(token))
+                else:
+                    logging.error("Error carga base de datos")
+
                 return jsonify(success="true", message="Enrutamiento Completo",error_code="",data=documento_json_str)            
 
             except Exception as e:
