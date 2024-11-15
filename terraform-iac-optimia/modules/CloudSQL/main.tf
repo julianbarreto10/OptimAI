@@ -1,6 +1,6 @@
 # Crear una instancia de Cloud SQL (MySQL 8.0) con edición Enterprise
-resource "google_sql_database_instance" "isbn_users_db" {
-  name             = "isbn-users-db"              # Nombre de la instancia de base de datos, asignado desde la variable
+resource "google_sql_database_instance" "optimia-drivers-db" {
+  name             = "optimia-drivers-db"              # Nombre de la instancia de base de datos, asignado desde la variable
   database_version = "MYSQL_8_0"                  # Versión de MySQL especificada: 8.0
   region           = var.region                   # Región donde se despliega la instancia, asignada desde la variable
 
@@ -30,8 +30,8 @@ resource "google_sql_database" "default" {
 
 # Crear un usuario para la instancia con acceso desde cualquier host
 resource "google_sql_user" "isbn_user" {
-  name     = "isbn"                               # Nombre del usuario de la base de datos
-  instance = google_sql_database_instance.isbn_users_db.name  # Referencia a la instancia de Cloud SQL creada
+  name     = "optimia"                               # Nombre del usuario de la base de datos
+  instance = google_sql_database_instance.optimia-drivers-db.name  # Referencia a la instancia de Cloud SQL creada
   password = "123"                                # Contraseña para el usuario (considera almacenarla de forma segura)
   host     = "%"                                  # Permitir acceso desde cualquier host
 }

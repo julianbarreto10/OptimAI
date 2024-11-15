@@ -1,7 +1,7 @@
 variable "database_name" {
-    type = string  
+    type = optimia-drivers-db
 }
 
 variable "region" {
-    type = string  
+    type = us-east4  
 }
